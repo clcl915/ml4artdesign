@@ -21,6 +21,7 @@ let boxPositions = [];
 let demoPass = ["3", "6", "9"];
 let passCount = 0;
 let showPopUp = false;
+let showingVideo = false;
 
 let viz = d3
   .select("#container")
@@ -71,7 +72,33 @@ singleBox.attr("transform", (d, i) => {
   console.log(boxPositions);
   return "translate(" + x + "," + y + ")";
 });
+let unlockedMessageDiv = document.createElement("div");
+unlockedMessageDiv.className = "unlockMessage";
+document.body.appendChild(unlockedMessageDiv);
+let messageDiv = document.createElement("div");
+messageDiv.className = "message-content";
+unlockedMessageDiv.appendChild(messageDiv);
+let closeButton = document.createElement("span");
+closeButton.className = "close";
+closeButton.innerHTML = "&times;";
+let message = document.createElement("p");
+message.innerHTML = "Webgazer.js is loading ...";
+message.innerHTML += "<br/>"
+message.innerHTML += "Please wait for red dot to appear";
+messageDiv.appendChild(closeButton);
+messageDiv.appendChild(message);
 
+closeButton.onclick = function () {
+  unlockedMessageDiv.style.display = "none";
+  webgazer.resume();
+};
+window.onclick = function (event) {
+  if (event.target == unlockedMessageDiv) {
+    unlockedMessageDiv.style.display = "none";
+    webgazer.resume();
+  }
+};
+webgazer.showVideo(false);
 webgazer
   .setGazeListener((data, timestamp) => {
     if (data == null) return;
@@ -192,36 +219,44 @@ webgazer
       if (showPopUp != true) {
         webgazer.pause();
         viz.transition().duration(1000).style("opacity", 0);
-        let unlockedMessageDiv = document.createElement("div");
-        unlockedMessageDiv.className = "unlockMessage";
-        document.body.appendChild(unlockedMessageDiv);
-        let messageDiv = document.createElement("div");
-        messageDiv.className = "message-content"
-        unlockedMessageDiv.appendChild(messageDiv);
-        let closeButton = document.createElement("span");
-        closeButton.className = "close";
-        closeButton.innerHTML = "&times;";
-        let message = document.createElement("p");
+        // let unlockedMessageDiv = document.createElement("div");
+        // unlockedMessageDiv.className = "unlockMessage";
+        // document.body.appendChild(unlockedMessageDiv);
+        // let messageDiv = document.createElement("div");
+        // messageDiv.className = "message-content";
+        // unlockedMessageDiv.appendChild(messageDiv);
+        // let closeButton = document.createElement("span");
+        // closeButton.className = "close";
+        // closeButton.innerHTML = "&times;";
+        // let message = document.createElement("p");
+        unlockedMessageDiv.style.display = "block"
         message.innerHTML = "Unlocked! Demo complete.";
-        messageDiv.appendChild(closeButton);
-        messageDiv.appendChild(message);
+        // messageDiv.appendChild(closeButton);
+        // messageDiv.appendChild(message);
 
-        closeButton.onclick = function () {
-          unlockedMessageDiv.style.display = "none";
-          webgazer.resume();
-        };
-        window.onclick = function (event) {
-          if (event.target == unlockedMessageDiv) {
-            unlockedMessageDiv.style.display = "none";
-            webgazer.resume();
-          }
-        };
+        // closeButton.onclick = function () {
+        //   unlockedMessageDiv.style.display = "none";
+        //   webgazer.resume();
+        // };
+        // window.onclick = function (event) {
+        //   if (event.target == unlockedMessageDiv) {
+        //     unlockedMessageDiv.style.display = "none";
+        //     webgazer.resume();
+        //   }
+        // };
         showPopUp = true;
       }
     }
   })
   .begin();
-
+function showVideo() {
+  if (showingVideo == false) {
+    webgazer.showVideo(true);
+    showingVideo = true;
+  } else {
+    webgazer.showVideo(false);
+  }
+}
 // async function startFaceRecognition() {
 //   let label = "Cindy";
 //   let img = await faceapi.fetchImage("cindy-g-li.jpg");
