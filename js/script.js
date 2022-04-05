@@ -85,6 +85,8 @@ let message = document.createElement("p");
 message.innerHTML = "Webgazer.js is loading ...";
 message.innerHTML += "<br/>"
 message.innerHTML += "Please wait for red dot to appear";
+message.innerHTML += "<br/>"
+message.innerHTML += "(Reminder: Please click and look at a few places to calibrate if necessary)";
 messageDiv.appendChild(closeButton);
 messageDiv.appendChild(message);
 
