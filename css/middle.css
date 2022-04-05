@@ -57,6 +57,11 @@ h1{
     font-weight: 900;
     color: white;
 }
+.s8 .content h3 span{
+  font-weight: bolder;
+  color: black;
+  font-size: 30px;
+}
 .s8 .flex{
     justify-content: end;
     gap: 2%;
@@ -66,6 +71,9 @@ h1{
     width: 5%;
     -webkit-animation: bounceRight 2s infinite;
     animation: bounceRight 2s infinite;
+}
+.s8 img:hover{
+  cursor: pointer;
 }
 .headline{
     display: inline-block;
