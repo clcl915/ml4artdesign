@@ -12,9 +12,12 @@ input.addEventListener("keyup", function(event) {
 });
 enterButton.addEventListener("click", ()=>{
     for (let i=0;i<commonPasswords.length;i++){
-        if (input.value == commonPasswords[i] || guessCount==3){
+        if (input.value == commonPasswords[i] || guessCount==2){
             console.log("next");
             window.location.href="middle.html";
+        }
+        else{
+          input.value = ''
         }
     }
     console.log(guessCount)
